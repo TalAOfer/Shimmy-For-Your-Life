@@ -27,6 +27,11 @@ public static class Tools
                 return Vector2.zero;
         }
     }
+
+    public static float GetIntervalLengthFromBPM(Song song, int everyXBeats)
+    {
+        return (60f / song.bpm) * everyXBeats;
+    }
 }
 public enum Directions
 {
