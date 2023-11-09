@@ -19,7 +19,6 @@ public class BeatUI : MonoBehaviour
         anim = GetComponent<Animator>();
         
         beatInterval = Tools.GetIntervalLengthFromBPM(song, 1);
-        Debug.Log(beatInterval);
         anim.speed = 1 / beatInterval;
         anim.Play("Heart_Beat");
     }

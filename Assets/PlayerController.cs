@@ -13,9 +13,7 @@ public class PlayerController : MonoBehaviour
     private int activeMove = -1;
     private bool canMove = false;
     private float beatInterval;
-
-    [SerializeField] Tilemap floorMap;
-
+    
     [SerializeField] GameEvent ResetLevel;
 
     #region Animation
