@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7331a9e9611466408230efcf750fa0a, type: 3}
+  m_Name: Level 2
+  m_EditorClassIdentifier: 
+  sceneName: 2
+  defaultSong: {fileID: 11400000, guid: 6db3dfe5f94940f4f966be29ec66763e, type: 2}
+  playerMoves:
+  - {fileID: 11400000, guid: 58495cdbbe6f6e14fba9077b73a6df64, type: 2}

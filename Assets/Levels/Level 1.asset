@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7331a9e9611466408230efcf750fa0a, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  sceneName: First
-  defaultSong: {fileID: 11400000, guid: 6db3dfe5f94940f4f966be29ec66763e, type: 2}
-  moves:
-  - {fileID: 11400000, guid: d70fbae326763e14da63ed118c5bcebe, type: 2}
+  sceneName: 1
+  defaultSong: {fileID: 11400000, guid: 1604319c22c3c174293600ecec4e00fc, type: 2}
+  playerMoves:
+  - {fileID: 11400000, guid: 3a1222a2cd9e59743b303d824a94962c, type: 2}
   - {fileID: 11400000, guid: b2fb466a99e1c094b876677a60d4be19, type: 2}
   - {fileID: 11400000, guid: a1f38bfae7e86784b95a8a35a518f336, type: 2}
+  - {fileID: 11400000, guid: d70fbae326763e14da63ed118c5bcebe, type: 2}
   - {fileID: 11400000, guid: 8bb9a1106e1ac0b499f056141253bf61, type: 2}

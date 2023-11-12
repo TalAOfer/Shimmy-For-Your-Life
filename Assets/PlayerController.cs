@@ -6,11 +6,12 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
+    private int activeMove = 0;
+    
     [SerializeField] private Song song;
     [SerializeField] private List<Move> moves;
     [SerializeField] private float moveBreakPeriodMultiplier = 0.25f;
     [SerializeField] private int everyXBeats = 2;
-    private int activeMove = -1;
     private bool canMove = false;
     private float beatInterval;
     
@@ -34,10 +35,7 @@ public class PlayerController : MonoBehaviour
         anim.speed = 1 / beatInterval;
     }
 
-    public void EnableMovement()
-    {
-        canMove = true;
-    }
+    public void SetMovement(bool enable) => canMove = enable;
 
     void Update()
     {
@@ -74,7 +72,7 @@ public class PlayerController : MonoBehaviour
         string markerString = (string)data;
         if (markerString == "1")
         {
-            EnableMovement();
+            SetMovement(true);
         }
     }
     
@@ -134,6 +132,7 @@ public class PlayerController : MonoBehaviour
 
             if (ShouldIFall())
             {
+                SetMovement(false);
                 if (!is3D)
                 {
                     StartCoroutine(Fall());
@@ -154,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator Fall()
     {
-        canMove = false;
         while (transform.localScale.x > 0.05f)
         {
             Vector3 newScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 3);
@@ -168,7 +166,6 @@ public class PlayerController : MonoBehaviour
     
     public IEnumerator Fall3D(float fallDistance, float fallSpeed)
     {
-        canMove = false;
         Vector3 startPosition = transform.position; // Store the starting position
         Vector3 endPosition = new Vector3(startPosition.x, startPosition.y, startPosition.z + fallDistance); // Calculate the end position
         float threshold = 0.1f; // How close we need to get to endPosition to finish falling
@@ -188,7 +185,6 @@ public class PlayerController : MonoBehaviour
         }
 
         ResetLevel.Raise(); // Assuming this is a method to reset the level
-        canMove = true; // Assuming you want to allow movement again after falling
     }
 
     private bool ShouldIFall()
@@ -201,7 +197,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (coll.CompareTag("Flag"))
                 {
-                    Debug.Log("I win!");
+                    SetMovement(false);
                 }
             }
 

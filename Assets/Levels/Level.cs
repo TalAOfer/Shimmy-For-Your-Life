@@ -11,7 +11,7 @@ public class Level : ScriptableObject
 {
     public string sceneName;
     public Song defaultSong;
-    public List<Move> moves;
+    public List<Move> playerMoves;
 
     [Button("Go To Scene", ButtonSizes.Large)]
     public void GotoScene()

@@ -18,8 +18,8 @@ public class CameraHelper : MonoBehaviour
         Camera.main.orthographic = true;
         virtualCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = twoDFollowOffset;
         virtualCam.transform.eulerAngles = Vector3.zero;
-        player.transform.eulerAngles = Vector3.zero;
-        player.is3D = false;
+        //player.transform.eulerAngles = Vector3.zero;
+        //player.is3D = false;
     }
 
     [Button]
@@ -28,7 +28,7 @@ public class CameraHelper : MonoBehaviour
         Camera.main.orthographic = false;
         virtualCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = threeDFollowOffset;
         virtualCam.transform.eulerAngles = threeDRotation;
-        player.transform.eulerAngles = threeDPlayerRotation;
-        player.is3D = true;
+        //player.transform.eulerAngles = threeDPlayerRotation;
+        //player.is3D = true;
     }
 }

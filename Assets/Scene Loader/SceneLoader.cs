@@ -16,6 +16,10 @@ public class SceneLoader : MonoBehaviour
         anim = GetComponent<Animator>();
         if (isFadeIn) anim.Play("Fade_In");
     }
+    private void ChangeScene(int sceneIndex)
+    {
+        SceneManager.LoadSceneAsync(sceneIndex);
+    }
 
     public void RestartScene()
     {
@@ -23,16 +27,22 @@ public class SceneLoader : MonoBehaviour
         ChangeScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ChangeScene(int sceneIndex)
+    public void GoToStartMenu()
     {
-        SceneManager.LoadSceneAsync(sceneIndex);
+        ChangeScene(0);
     }
 
-    public void NextScene()
+    public void GoToLevel(Component sender, object data)
+    {
+        int levelIndex = (int)data;
+        ChangeScene(levelIndex + 1);
+    }
+    public void GoToNextLevel()
     {
         if (isFadeOut) anim.Play("Fade_Out");
         ChangeScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    
 
     public void ExitApp()
     {
