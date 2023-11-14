@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3208384030495308692}
+  - component: {fileID: 1848182918434413791}
   - component: {fileID: 6479116679996985651}
   - component: {fileID: 8528762219808619657}
   - component: {fileID: 4540930589432832085}
-  - component: {fileID: 1848182918434413791}
   m_Layer: 5
   m_Name: Card 2
   m_TagString: Untagged
@@ -41,6 +41,23 @@ RectTransform:
   m_AnchoredPosition: {x: -123, y: -43.5}
   m_SizeDelta: {x: 80.9316, y: 137.0024}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1848182918434413791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5386140443198127537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ca334ba7dccf14594ac858afd5fcf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonPressedKey: {fileID: 584076145, guid: 628b3ea7b9d288a438fd66a8d5495afc, type: 3}
+  pressedKey: {fileID: -1688701825, guid: 628b3ea7b9d288a438fd66a8d5495afc, type: 3}
+  numberKeyImage: {fileID: 5449791003034388196}
+  moveImage: {fileID: 7032242157872667586}
+  rectTransform: {fileID: 3208384030495308692}
 --- !u!222 &6479116679996985651
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -105,22 +122,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1848182918434413791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5386140443198127537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30ca334ba7dccf14594ac858afd5fcf2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nonPressedKey: {fileID: 584076145, guid: 628b3ea7b9d288a438fd66a8d5495afc, type: 3}
-  pressedKey: {fileID: -1688701825, guid: 628b3ea7b9d288a438fd66a8d5495afc, type: 3}
-  numberKeyImage: {fileID: 5449791003034388196}
-  moveImage: {fileID: 7032242157872667586}
 --- !u!1 &5419420663566999337
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,7 +187,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9d8d91077970b2a4b9805b00ea4030b7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fba0c3153a089404081ed854e4a61258, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -261,7 +262,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1214997904, guid: b7c048b011e015d41ae565030e5ea987, type: 3}
+  m_Sprite: {fileID: 584076145, guid: 628b3ea7b9d288a438fd66a8d5495afc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

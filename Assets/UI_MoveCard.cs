@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,14 @@ public class UI_MoveCard : MonoBehaviour
 
     [SerializeField] private Image numberKeyImage;
     [SerializeField] private Image moveImage;
+    public RectTransform rectTransform;
+    
 
-    public void Init(Sprite moveIcon)
+    public void SetIcon(Sprite moveIcon)
     {
         moveImage.sprite = moveIcon;
     }
-
+    
     public void OnValueChange(bool isPressed)
     {
         if (isPressed)

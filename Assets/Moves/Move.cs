@@ -10,6 +10,7 @@ public class Move : ScriptableObject
     
     public List<Step> steps;
     public bool ignoreBreakBetweenSteps;
+    public Sprite icon;
 }
 
 [Serializable]

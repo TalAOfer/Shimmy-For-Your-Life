@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 public class MusicManager : MonoBehaviour
 {
-    [SerializeField] private Song song;
+    [SerializeField] private CurrentLevel currentLevel;
     private FMOD.Studio.EventInstance musicInstance;
 
     private TimelineInfo timelineInfo = null;
@@ -31,16 +31,16 @@ public class MusicManager : MonoBehaviour
     
     private void Awake()
     {
-        if (!song.musicEvent.IsNull) 
+        if (!currentLevel.value.defaultSong.musicEvent.IsNull) 
         {
-            musicInstance = RuntimeManager.CreateInstance(song.musicEvent);
+            musicInstance = RuntimeManager.CreateInstance(currentLevel.value.defaultSong.musicEvent);
             musicInstance.start();
         }
     }
 
     private void Start()
     {
-        if (!song.musicEvent.IsNull)
+        if (!currentLevel.value.defaultSong.musicEvent.IsNull)
         {
             timelineInfo = new TimelineInfo();
             beatCallback = new FMOD.Studio.EVENT_CALLBACK(BeatEventCallback);
@@ -67,7 +67,7 @@ public class MusicManager : MonoBehaviour
     private void OnDestroy()
     {
         
-        if (!song.musicEvent.IsNull)
+        if (!currentLevel.value.defaultSong.musicEvent.IsNull)
         {
             // Remove the callback
             musicInstance.setCallback(null);

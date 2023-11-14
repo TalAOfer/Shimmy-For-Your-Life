@@ -6,15 +6,17 @@ using UnityEngine;
 using Sirenix.OdinInspector.Editor;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 public class LevelEditor : OdinEditorWindow
 {
+#if UNITY_EDITOR
     [MenuItem("Tools/Level Editor")]
     private static void OpenWindow()
     {
         GetWindow<LevelEditor>().Show();
     }
-
+    
     public GameObject tilePrefab;
     public Move move;
     public bool withFirst;
@@ -56,8 +58,6 @@ public class LevelEditor : OdinEditorWindow
             }
         }
 
-        // If you're using Odin and working in the editor, make sure to record the undo so you can undo this action
-#if UNITY_EDITOR
     Undo.RegisterCreatedObjectUndo(parentObject, "Create Tile Parent");
 #endif
     }

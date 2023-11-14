@@ -4,17 +4,18 @@ using UnityEngine;
 
 public abstract class DancingEntity : MonoBehaviour
 {
-    [SerializeField] protected CurrentLevel currentLevel;
     [SerializeField] private float moveBreakPeriodMultiplier = 0.25f;
     [SerializeField] private int everyXBeats = 2;
+    [SerializeField] private AnimationCurve jumpCurve;
+    [SerializeField] protected CurrentLevel currentLevel;
+    public BoolVariable is3D;
+    
     private bool canMove = false;
     private float beatInterval;
     protected int activeMoveIndex;
     
     protected Animator anim;
     private SpriteRenderer sr;
-    [SerializeField] private AnimationCurve jumpCurve;
-    public BoolVariable is3D;
     
     void Start()
     {

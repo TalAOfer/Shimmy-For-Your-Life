@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeatUI : MonoBehaviour
+public class HeartBeatUI : MonoBehaviour
 {
 
     public AnimationCurve beatCurve; // Set this up in the inspector for a nice beating effect

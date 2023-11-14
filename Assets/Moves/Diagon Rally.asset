@@ -21,3 +21,5 @@ MonoBehaviour:
     length: 1
     moveHeight: 0
     animName: Spin
+  ignoreBreakBetweenSteps: 0
+  icon: {fileID: 21300000, guid: aa6894c1c92803a42b2835c5bee1ff7b, type: 3}

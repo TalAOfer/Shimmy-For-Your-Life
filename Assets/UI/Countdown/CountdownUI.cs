@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class CountdownUI : MonoBehaviour
 {
     [SerializeField] private Sprite[] sprites;
@@ -9,6 +10,7 @@ public class CountdownUI : MonoBehaviour
     public AnimationCurve beatCurve;
     private Image image;
     private Animator anim;
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -21,6 +23,9 @@ public class CountdownUI : MonoBehaviour
         string markerString = (string)data;
         switch (markerString)
         {
+            case "READY?":
+                image.sprite = sprites[4];
+                break;
             case "3":
                 image.sprite = sprites[2];
                 break;
@@ -34,6 +39,7 @@ public class CountdownUI : MonoBehaviour
                 image.sprite = sprites[3];
                 break;
         }
+
         anim.Play("Countdown_Vanish", -1, 0f);
     }
 }

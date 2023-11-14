@@ -13,7 +13,8 @@ public class UIlevelsManager : MonoBehaviour
     
     [SerializeField] private List<GameObject> batches;
     private int currentBatchIndex = 0;
-    
+
+#if  UNITY_EDITOR
     [Button]
     public void SpawnLevelBatches()
     {
@@ -72,6 +73,7 @@ public class UIlevelsManager : MonoBehaviour
         
         ShowCurrentBatch();
     }
+#endif
 
     public void NextBatch()
     {

@@ -7,9 +7,10 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private bool isFadeIn;
     [SerializeField] private bool isFadeOut;
-
+    [SerializeField] private CurrentLevel currentLevel;
+    [SerializeField] private AllLevels allLevels;
+    
     private Animator anim;
-    private int sceneIndex;
 
     private void Start()
     {
@@ -35,6 +36,7 @@ public class SceneLoader : MonoBehaviour
     public void GoToLevel(Component sender, object data)
     {
         int levelIndex = (int)data;
+        currentLevel.value = allLevels.levels[levelIndex];
         ChangeScene(levelIndex + 1);
     }
     public void GoToNextLevel()
