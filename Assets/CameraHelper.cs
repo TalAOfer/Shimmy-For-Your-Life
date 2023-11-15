@@ -5,12 +5,13 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 public class CameraHelper : MonoBehaviour
 {
-    public PlayerController player;
-    public CinemachineVirtualCamera virtualCam;
-    public Vector3 twoDFollowOffset;
-    public Vector3 threeDFollowOffset;
-    public Vector3 threeDRotation;
-    public Vector3 threeDPlayerRotation;
+    [SerializeField] private GameObject player, winFlag;
+    [SerializeField] private CinemachineVirtualCamera virtualCam;
+    [SerializeField] private Vector3 twoDFollowOffset;
+    [SerializeField] private Vector3 threeDFollowOffset;
+    [SerializeField] private Vector3 threeDCamRotation;
+    [SerializeField] private Vector3 threeDObjectRotation;
+    [SerializeField] private BoolVariable is3d;
         
     [Button]
     public void ChangeTo2D()
@@ -18,8 +19,9 @@ public class CameraHelper : MonoBehaviour
         Camera.main.orthographic = true;
         virtualCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = twoDFollowOffset;
         virtualCam.transform.eulerAngles = Vector3.zero;
-        //player.transform.eulerAngles = Vector3.zero;
-        //player.is3D = false;
+        player.transform.eulerAngles = Vector3.zero;
+        winFlag.transform.eulerAngles = Vector3.zero;
+        is3d.value = false;
     }
 
     [Button]
@@ -27,8 +29,9 @@ public class CameraHelper : MonoBehaviour
     {
         Camera.main.orthographic = false;
         virtualCam.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = threeDFollowOffset;
-        virtualCam.transform.eulerAngles = threeDRotation;
-        //player.transform.eulerAngles = threeDPlayerRotation;
-        //player.is3D = true;
+        virtualCam.transform.eulerAngles = threeDCamRotation;
+        player.transform.eulerAngles = threeDObjectRotation;
+        winFlag.transform.eulerAngles = threeDObjectRotation;
+        is3d.value = true;
     }
 }

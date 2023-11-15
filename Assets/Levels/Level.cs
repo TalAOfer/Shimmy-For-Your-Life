@@ -16,7 +16,6 @@ public class Level : ScriptableObject
     public List<Move> playerMoves;
     
 #if  UNITY_EDITOR
-    [Button("Go To Scene", ButtonSizes.Large)]
     public void GotoScene()
     {
         EditorSceneManager.OpenScene("Assets/Scenes/" + sceneName + ".unity");

@@ -20,7 +20,7 @@ public class UIlevelsManager : MonoBehaviour
     {
         int amountOfLevels = allLevels.levels.Count;
         int amountOfBatches = (amountOfLevels / batchSize) + (amountOfLevels % batchSize > 0 ? 1 : 0);
-        int currentLevelIndex = 0;
+        int currentLevelIndex = 1;
 
         if (batches.Count > 0)
         {
@@ -46,9 +46,7 @@ public class UIlevelsManager : MonoBehaviour
             {
                 if (currentLevelIndex < amountOfLevels)
                 {
-                    levelElement.SetLevelIndex(currentLevelIndex);
-                    levelElement.SetLevelName(allLevels.levels[currentLevelIndex].defaultSong.name);
-                    levelElement.gameObject.name = allLevels.levels[currentLevelIndex].defaultSong.name;
+                    levelElement.SetLevel(allLevels.levels[currentLevelIndex]);
                     currentLevelIndex++;
                 }
                 else

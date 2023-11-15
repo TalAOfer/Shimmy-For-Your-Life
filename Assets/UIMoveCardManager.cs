@@ -7,26 +7,53 @@ public class UIMoveCardManager : MonoBehaviour
 {
     [SerializeField] private CurrentLevel currentLevel;
     [SerializeField] private List<UI_MoveCard> moveCards;
+    [SerializeField] private IntVariable playerActiveMove;
+    private int currentActiveCard = 0;
     private float startY;
     private float endY = -70f;
 
     private void Start()
     {
         startY = moveCards[0].rectTransform.anchoredPosition.y;
+        StartCoroutine(ShowCards(1f));
     }
 
-    public void OnMarker(Component sender, object data)
+    private void Update()
     {
-        string markerString = (string)data;
-        Debug.Log(markerString);
-        if (markerString == "3")
+        int activeMove = playerActiveMove.value - 1;
+        for( int i = 0; i < moveCards.Count ; i++)
         {
-            StartCoroutine(ShowCards());
+            if (i == activeMove)
+            {
+                if (!moveCards[i].isActive)
+                {
+                    moveCards[i].SetPicked(true);
+                }
+            }
+            else
+            {
+                if (moveCards[i].isActive)
+                {
+                    moveCards[i].SetPicked(false);
+                }
+            }
         }
     }
 
-    private IEnumerator ShowCards()
+
+    // public void OnMarker(Component sender, object data)
+    // {
+    //     string markerString = (string)data;
+    //     Debug.Log(markerString);
+    //     if (markerString == "3")
+    //     {
+    //         StartCoroutine(ShowCards());
+    //     }
+    // }
+
+    private IEnumerator ShowCards(float startTime)
     {
+        yield return new WaitForSeconds(startTime);
         float beatLength = Tools.GetIntervalLengthFromBPM(currentLevel.value.defaultSong, 1);
         float brakeLength = beatLength / 4f;
         

@@ -35,14 +35,16 @@ public class SceneLoader : MonoBehaviour
 
     public void GoToLevel(Component sender, object data)
     {
-        int levelIndex = (int)data;
-        currentLevel.value = allLevels.levels[levelIndex];
-        ChangeScene(levelIndex + 1);
+        Level level = (Level)data;
+        currentLevel.value = level;
+        SceneManager.LoadSceneAsync(level.sceneName);
     }
     public void GoToNextLevel()
     {
         if (isFadeOut) anim.Play("Fade_Out");
-        ChangeScene(SceneManager.GetActiveScene().buildIndex + 1);
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        currentLevel.value = allLevels.levels[currentLevelIndex + 1];
+        ChangeScene(currentLevelIndex + 1);
     }
     
 

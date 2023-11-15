@@ -6,6 +6,7 @@ public class PlayerDancer : DancingEntity
 {
     public GameEvent ResetLevel;
     public GameEvent WinLevel;
+    [SerializeField] private IntVariable playerActiveMove;
     
     void Update()
     {
@@ -24,6 +25,8 @@ public class PlayerDancer : DancingEntity
         {
             activeMoveIndex = 0;
         }
+
+        playerActiveMove.value = activeMoveIndex;
     }
 
     bool IsAnyOfKeysHeld()

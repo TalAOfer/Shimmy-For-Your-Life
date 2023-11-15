@@ -9,15 +9,15 @@ public class UILevelElement : MonoBehaviour
     [SerializeField] private GameEvent ChangeScene;
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private int levelIndex;
+    [SerializeField] private Level level;
 
     public void SetButtonState(bool enable) => button.interactable = enable;
 
-    public void SetLevelIndex(int index)
+    public void SetLevel(Level correspondentLevel)
     {
-        levelIndex = index;
+        level = correspondentLevel;
+        text.text = level.sceneName;
+        gameObject.name = level.sceneName;
     }
-
-    public void SetLevelName(string levelName) => text.text = levelName;
-    public void DoChangeScene() => ChangeScene.Raise(this, levelIndex);
+    public void DoChangeScene() => ChangeScene.Raise(this, level);
 }
