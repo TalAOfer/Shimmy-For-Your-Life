@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicEvent:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  bpm: 0
+      Data1: -1443050392
+      Data2: 1333844857
+      Data3: 2140912043
+      Data4: -1426910330
+    Path: event:/Off The Rails
+  bpm: 128

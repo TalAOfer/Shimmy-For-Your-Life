@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 public class WinningTitle : MonoBehaviour
 {
-    [SerializeField] private GameObject mainMenuButton, nextLevelButton;
-
-    public void EnableButton()
+    [SerializeField] private GameObject mainMenuButton, nextLevelButton, perfectSign;
+    [SerializeField] private BoolVariable didPerfect;
+    
+    public void EnableButtons()
     {
         mainMenuButton.SetActive(true);
+        perfectSign.SetActive(didPerfect.value);
         nextLevelButton.SetActive(true);
     }
 }

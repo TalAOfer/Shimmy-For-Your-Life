@@ -6,6 +6,7 @@ public class PlayerDancer : DancingEntity
 {
     public GameEvent ResetLevel;
     public GameEvent WinLevel;
+    public GameEvent OnPlayerMissedBeat;
     [SerializeField] private IntVariable playerActiveMove;
     
     void Update()
@@ -47,8 +48,8 @@ public class PlayerDancer : DancingEntity
 
     public override void UpdateMoveIndex()
     {
-        //TODO if activeMove is 0, decrement boogie meter.  
-        activeMoveIndex = 0;
+        if (activeMoveIndex != 0) activeMoveIndex = 0;
+        else OnPlayerMissedBeat.Raise();
     }
 
     public override bool ShouldIStop(Collider2D[] objectsUnderMe)

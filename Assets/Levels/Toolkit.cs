@@ -12,12 +12,12 @@ public class Toolkit : OdinEditorWindow
     {
         GetWindow<Toolkit>().Show();
     }
-    
+
     [TabGroup("Level Picker")]
     public AllLevels allLevels; // Drag your AllLevels ScriptableObject here in the Inspector.
-    [TabGroup("Level Picker")]
-    public CurrentLevel currentLevel;
-    
+
+    [TabGroup("Level Picker")] public CurrentLevel currentLevel;
+
     // This custom drawer method is specifically for the 'Level Picker' tab.
     [TabGroup("Level Picker"), OnInspectorGUI]
     private void DrawLevelPickerTab()
@@ -57,15 +57,13 @@ public class Toolkit : OdinEditorWindow
             GUILayout.EndHorizontal(); // End the last horizontal layout
         }
     }
-    
-    [TabGroup("Tile Maker")]
-    public GameObject tilePrefab;
 
-    [TabGroup("Tile Maker")]
+    [TabGroup("Tile Maker")] public GameObject tilePrefab;
+
+    [TabGroup("Tile Maker")] [ValueDropdown("GetMovesFromCurrentLevel")]
     public Move move;
 
-    [TabGroup("Tile Maker")]
-    public bool withFirst;
+    [TabGroup("Tile Maker")] public bool withFirst;
 
     [TabGroup("Tile Maker")]
     [Button("Create Tile")]
@@ -100,12 +98,24 @@ public class Toolkit : OdinEditorWindow
                 currentPosition += new Vector3(stepDirection.x, stepDirection.y, 0);
 
                 // Instantiate the tile at the current position
-                GameObject newTile = Instantiate(tilePrefab, currentPosition, Quaternion.identity);
-                newTile.transform.SetParent(parentObject.transform);
+                if (j == step.length - 1)
+                {
+                    GameObject newTile = Instantiate(tilePrefab, currentPosition, Quaternion.identity);
+                    newTile.transform.SetParent(parentObject.transform);
+                }
             }
         }
 
         Undo.RegisterCreatedObjectUndo(parentObject, "Create Tile Parent");
     }
-    
+
+    private IEnumerable<Move> GetMovesFromCurrentLevel()
+    {
+        if (currentLevel != null && currentLevel.value != null && currentLevel.value.playerMoves != null)
+        {
+            return currentLevel.value.playerMoves;
+        }
+
+        return new List<Move>(); // Return an empty list if no moves are available
+    }
 }

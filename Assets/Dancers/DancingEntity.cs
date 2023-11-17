@@ -4,7 +4,6 @@ using UnityEngine;
 
 public abstract class DancingEntity : MonoBehaviour
 {
-    [SerializeField] private float moveBreakPeriodMultiplier = 0.25f;
     [SerializeField] private int everyXBeats = 2;
     [SerializeField] private AnimationCurve jumpCurve;
     [SerializeField] protected CurrentLevel currentLevel;
@@ -30,7 +29,7 @@ public abstract class DancingEntity : MonoBehaviour
     public void OnMarker(Component sender, object data)
     {
         string markerString = (string)data;
-        if (markerString == "1")
+        if (markerString == "GO!")
         {
             SetMovement(true);
         }
@@ -53,7 +52,7 @@ public abstract class DancingEntity : MonoBehaviour
     {
         UpdateMoveIndex();
 
-        float moveBreakDuration = move.ignoreBreakBetweenSteps ? 0 : beatInterval * moveBreakPeriodMultiplier;
+        float moveBreakDuration = move.ignoreBreakBetweenSteps ? 0 : beatInterval * (1f / (move.steps.Count * 2));
         float stepDuration = (beatInterval / move.steps.Count) - moveBreakDuration;
         float animSpeed = 1 / stepDuration;
         anim.speed = animSpeed;

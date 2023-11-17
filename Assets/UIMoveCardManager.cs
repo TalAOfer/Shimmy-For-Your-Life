@@ -8,7 +8,6 @@ public class UIMoveCardManager : MonoBehaviour
     [SerializeField] private CurrentLevel currentLevel;
     [SerializeField] private List<UI_MoveCard> moveCards;
     [SerializeField] private IntVariable playerActiveMove;
-    private int currentActiveCard = 0;
     private float startY;
     private float endY = -70f;
 

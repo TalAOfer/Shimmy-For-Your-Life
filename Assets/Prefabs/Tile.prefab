@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6952982152478401735}
   - component: {fileID: 5340288453332262359}
   - component: {fileID: 7866666470894747399}
-  - component: {fileID: 8843650625769114630}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Tile
@@ -161,34 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEvent: {fileID: 11400000, guid: 59e793f9484250746b59b75343e065aa, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5340288453332262359}
-        m_TargetAssemblyTypeName: CustomTile, Assembly-CSharp
-        m_MethodName: NextColor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8843650625769114630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5712016430334889555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cbd0748e8a561f4188ef284437f3961, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: aa5f0090c4aad074f8e2e3128dc0f9e9, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
