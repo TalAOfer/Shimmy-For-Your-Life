@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class UIMoveCardManager : MonoBehaviour
 {
-    [SerializeField] private CurrentLevel currentLevel;
     [SerializeField] private List<UI_MoveCard> moveCards;
     [SerializeField] private IntVariable playerActiveMove;
+    private Level currentLevel;
     private float startY;
     private float endY = -70f;
 
-    private void Start()
+    public void Initilaize(Component sender, object data)
     {
+        currentLevel = (Level)data;
         startY = moveCards[0].rectTransform.anchoredPosition.y;
         StartCoroutine(ShowCards(1f));
-    }
-
+    } 
     private void Update()
     {
         int activeMove = playerActiveMove.value - 1;
@@ -39,27 +39,16 @@ public class UIMoveCardManager : MonoBehaviour
         }
     }
 
-
-    // public void OnMarker(Component sender, object data)
-    // {
-    //     string markerString = (string)data;
-    //     Debug.Log(markerString);
-    //     if (markerString == "3")
-    //     {
-    //         StartCoroutine(ShowCards());
-    //     }
-    // }
-
     private IEnumerator ShowCards(float startTime)
     {
         yield return new WaitForSeconds(startTime);
-        float beatLength = Tools.GetIntervalLengthFromBPM(currentLevel.value.defaultSong, 1);
+        float beatLength = Tools.GetIntervalLengthFromBPM(currentLevel.defaultSong, 1);
         float brakeLength = beatLength / 4f;
         
         for (int i = 0; i < moveCards.Count ; i++)
         {
             UI_MoveCard card = moveCards[i];
-            card.SetIcon(currentLevel.value.playerMoves[i+1].icon);
+            card.SetIcon(currentLevel.playerMoves[i+1].icon);
             StartCoroutine(LerpYCoroutine(startY, endY, card.rectTransform, beatLength));
             yield return new WaitForSeconds(brakeLength);
         }
@@ -70,7 +59,7 @@ public class UIMoveCardManager : MonoBehaviour
         for (int i = 0; i < moveCards.Count ; i++)
         {
             UI_MoveCard card = moveCards[i];
-            card.SetIcon(currentLevel.value.playerMoves[i+1].icon);
+            card.SetIcon(currentLevel.playerMoves[i+1].icon);
             StartCoroutine(LerpYCoroutine(endY, startY, card.rectTransform, 0.25f));
         }
     }

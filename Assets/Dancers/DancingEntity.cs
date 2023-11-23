@@ -6,30 +6,35 @@ public abstract class DancingEntity : MonoBehaviour
 {
     [SerializeField] private int everyXBeats = 2;
     [SerializeField] private AnimationCurve jumpCurve;
-    [SerializeField] protected CurrentLevel currentLevel;
+    [SerializeField] private string startMarkerString;
+    protected Level currentLevel;
     public BoolVariable is3D;
     
-    private bool canMove = false;
+    protected bool canMove = false;
     private float beatInterval;
     protected int activeMoveIndex;
     
-    protected Animator anim;
-    private SpriteRenderer sr;
-    
-    void Start()
+    [SerializeField] protected Animator anim;
+    [SerializeField] private SpriteRenderer sr;
+    private bool isInitialized;
+
+    public virtual void Initialize(Component sender, object data)
     {
-        anim = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
-        beatInterval = Tools.GetIntervalLengthFromBPM(currentLevel.value.defaultSong, everyXBeats);
+        currentLevel = (Level)data;
+        InitializeMoves(currentLevel);
+        beatInterval = Tools.GetIntervalLengthFromBPM(currentLevel.defaultSong, everyXBeats);
         anim.speed = 1 / beatInterval;
+        isInitialized = true;
     }
+
+    public virtual void InitializeMoves(Level level){}
 
     public void SetMovement(bool enable) => canMove = enable;
     
     public void OnMarker(Component sender, object data)
     {
         string markerString = (string)data;
-        if (markerString == "GO!")
+        if (markerString == startMarkerString)
         {
             SetMovement(true);
         }
@@ -39,7 +44,7 @@ public abstract class DancingEntity : MonoBehaviour
     {
         int beatNum = (int)data;
         
-        if (canMove && beatNum % 2 != 0)
+        if (isInitialized && canMove && beatNum % 2 != 0)
         {
             Move();
         }

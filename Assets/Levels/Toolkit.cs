@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -16,12 +18,24 @@ public class Toolkit : OdinEditorWindow
     [TabGroup("Level Picker")]
     public AllLevels allLevels; // Drag your AllLevels ScriptableObject here in the Inspector.
 
+    [TabGroup("Level Picker")]
+    public Level startMenu; // Drag your StartMenu ScriptableObject here in the Inspector.
+    
     [TabGroup("Level Picker")] public CurrentLevel currentLevel;
 
     // This custom drawer method is specifically for the 'Level Picker' tab.
     [TabGroup("Level Picker"), OnInspectorGUI]
     private void DrawLevelPickerTab()
     {
+        if (startMenu != null)
+        {
+            if (GUILayout.Button("Start Menu", GUILayout.Width(100), GUILayout.Height(25)))
+            {
+                currentLevel.value = startMenu;
+                startMenu.GotoScene();
+            }
+        }
+        
         if (allLevels != null && allLevels.levels != null)
         {
             // Define the number of buttons per row based on the current window width
@@ -77,7 +91,8 @@ public class Toolkit : OdinEditorWindow
         Vector3 currentPosition = Vector3.zero;
 
         // Instantiate the start tile at the origin (0,0)
-        GameObject startTile = Instantiate(tilePrefab, currentPosition, Quaternion.identity);
+        
+        GameObject startTile = Tools.InstantiatePrefab(tilePrefab, currentPosition);
         startTile.transform.SetParent(parentObject.transform);
 
         // Loop through each step and instantiate the tiles
@@ -100,7 +115,7 @@ public class Toolkit : OdinEditorWindow
                 // Instantiate the tile at the current position
                 if (j == step.length - 1)
                 {
-                    GameObject newTile = Instantiate(tilePrefab, currentPosition, Quaternion.identity);
+                    GameObject newTile = Tools.InstantiatePrefab(tilePrefab, currentPosition);
                     newTile.transform.SetParent(parentObject.transform);
                 }
             }
@@ -119,3 +134,4 @@ public class Toolkit : OdinEditorWindow
         return new List<Move>(); // Return an empty list if no moves are available
     }
 }
+#endif

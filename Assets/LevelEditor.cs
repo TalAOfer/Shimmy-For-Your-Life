@@ -1,16 +1,13 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
+
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Sirenix.OdinInspector.Editor;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
 public class LevelEditor : OdinEditorWindow
 {
-#if UNITY_EDITOR
     [MenuItem("Tools/Level Editor")]
     private static void OpenWindow()
     {
@@ -58,7 +55,7 @@ public class LevelEditor : OdinEditorWindow
             }
         }
 
-    Undo.RegisterCreatedObjectUndo(parentObject, "Create Tile Parent");
-#endif
+        Undo.RegisterCreatedObjectUndo(parentObject, "Create Tile Parent");
     }
 }
+#endif

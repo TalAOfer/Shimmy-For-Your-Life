@@ -147,6 +147,8 @@ MonoBehaviour:
   sr: {fileID: 5598292356449620495}
   colors: {fileID: 11400000, guid: 2074a1b68f0995c439c0357b2f92720e, type: 2}
   startingColorIndex: 0
+  shouldFall: 0
+  coll: {fileID: 6952982152478401735}
 --- !u!114 &7866666470894747399
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
 public static class Tools
 {
@@ -32,7 +34,48 @@ public static class Tools
     {
         return (60f / song.bpm) * everyXBeats;
     }
+
+
+    public static List<int> GetRandoms(int numOfNums, int min, int max)
+    {
+        if (max - min + 1 < numOfNums)
+        {
+            throw new System.Exception("Range is too small for the number of unique numbers requested.");
+        }
+
+        List<int> randomNumbers = new List<int>();
+        while (randomNumbers.Count < numOfNums)
+        {
+            int randomNumber = Random.Range(min, max + 1);
+            if (!randomNumbers.Contains(randomNumber))
+            {
+                randomNumbers.Add(randomNumber);
+            }
+        }
+
+        return randomNumbers;
+    }
+    
+    public static void PlaySound(string soundName, Vector3 pos)
+    {
+        string eventName = "event:/" + soundName;
+        FMODUnity.RuntimeManager.PlayOneShot(eventName, pos);
+    }
+
+    public static bool didSucceed(float chance)
+    {
+        int rand = Random.Range(0, 100);
+        return (chance > rand);
+    }
+
+    public static GameObject InstantiatePrefab(GameObject prefab, Vector3 position)
+    {
+        GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+        instance.transform.position = position;
+        return instance;
+    }
 }
+
 public enum Directions
 {
     Up,

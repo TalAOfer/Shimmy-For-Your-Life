@@ -43,7 +43,7 @@ public class PlayerDancer : DancingEntity
 
     public override void Move()
     {
-        StartCoroutine(GetMoving(currentLevel.value.playerMoves[activeMoveIndex]));
+        StartCoroutine(GetMoving(currentLevel.playerMoves[activeMoveIndex]));
     }
 
     public override void UpdateMoveIndex()
@@ -95,4 +95,5 @@ public class PlayerDancer : DancingEntity
     {
         ResetLevel.Raise();
     }
+    
 }

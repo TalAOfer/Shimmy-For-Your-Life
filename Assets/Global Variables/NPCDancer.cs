@@ -1,10 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NPCDancer : DancingEntity
 {
-    [SerializeField] protected List<Move> moves;
+    [SerializeField] private AllMoves allMoves;
+    private List<Move> moves;
+
+    public override void InitializeMoves(Level level)
+    {
+        moves = new List<Move>();
+        int numOfMoves = Random.Range(3, 5);
+        List<int> randoms = Tools.GetRandoms(numOfMoves, 0, allMoves.moves.Count - 1);
+        for (int i = 0; i < randoms.Count; i++)
+        {
+            moves.Add(allMoves.moves[randoms[i]]);
+        }
+    }
+    
+    
+
     public override void Move()
     {
         StartCoroutine(GetMoving(moves[activeMoveIndex]));
@@ -40,5 +57,4 @@ public class NPCDancer : DancingEntity
     {
         Destroy(gameObject);
     }
-
 }

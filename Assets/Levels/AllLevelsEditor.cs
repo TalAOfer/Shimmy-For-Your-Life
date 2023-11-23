@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 using Sirenix.OdinInspector;
@@ -43,3 +45,5 @@ public class AllLevelsEditor : OdinEditor
         }
     }
 }
+
+#endif

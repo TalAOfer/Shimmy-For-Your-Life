@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
@@ -12,15 +13,39 @@ public class UIlevelsManager : MonoBehaviour
     [SerializeField] private GameObject BatchPrefab;
     
     [SerializeField] private List<GameObject> batches;
+    [SerializeField] private List<UILevelElement> levelElements;
     private int currentBatchIndex = 0;
 
+    private void Start()
+    {
+        GameData currentGameData = SaveSystem.LoadData();
+
+        if (currentGameData == null)
+        {
+            currentGameData = SaveSystem.CreateNewData(allLevels);
+        }
+        
+        for (int i = 0; i < currentGameData.levels.Count; i++)
+        {
+            LevelData currentLevelData = currentGameData.levels[i];
+            levelElements[i].SetButtonState(currentLevelData.isUnlocked);
+            levelElements[i].SetPerfectState(currentLevelData.didPerfect);
+        }
+    } 
+    
 #if  UNITY_EDITOR
+    [Button]
+    public void ResetGameData()
+    {
+        SaveSystem.ResetGameData();
+    }
+    
     [Button]
     public void SpawnLevelBatches()
     {
         int amountOfLevels = allLevels.levels.Count;
         int amountOfBatches = (amountOfLevels / batchSize) + (amountOfLevels % batchSize > 0 ? 1 : 0);
-        int currentLevelIndex = 1;
+        int currentLevelIndex = 0;
 
         if (batches.Count > 0)
         {
@@ -31,6 +56,7 @@ public class UIlevelsManager : MonoBehaviour
         }
         
         batches = new List<GameObject>();
+        levelElements = new List<UILevelElement>();
 
         for (int i = 0; i < amountOfBatches; i++)
         {
@@ -47,6 +73,7 @@ public class UIlevelsManager : MonoBehaviour
                 if (currentLevelIndex < amountOfLevels)
                 {
                     levelElement.SetLevel(allLevels.levels[currentLevelIndex]);
+                    levelElements.Add(levelElement);
                     currentLevelIndex++;
                 }
                 else

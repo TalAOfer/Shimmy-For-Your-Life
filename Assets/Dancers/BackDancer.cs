@@ -23,6 +23,7 @@ public class BackDancer : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         beatInterval = Tools.GetIntervalLengthFromBPM(song, everyXBeats);
         anim.speed = 1 / beatInterval;
+        canMove = true;
     }
 
     public void OnMarker(Component sender, object data)
@@ -109,10 +110,10 @@ public class BackDancer : MonoBehaviour
         {
             Vector3 newScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 3);
             transform.localScale = newScale;
+            yield return null;
         }
 
         Destroy(gameObject);
-        yield return null;
     }
 
     private bool ShouldIFall()

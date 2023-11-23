@@ -43,6 +43,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (isFadeOut) anim.Play("Fade_Out");
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        Debug.Log(currentLevelIndex);
         currentLevel.value = allLevels.levels[currentLevelIndex + 1];
         ChangeScene(currentLevelIndex + 1);
     }

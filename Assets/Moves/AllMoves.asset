@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cded96b1b8d9bf43a85185fd2a325c4, type: 3}
+  m_Name: AllMoves
+  m_EditorClassIdentifier: 
+  moves:
+  - {fileID: 11400000, guid: 3a1222a2cd9e59743b303d824a94962c, type: 2}
+  - {fileID: 11400000, guid: 8096db2d43f67f4488d270e87ffa530f, type: 2}
+  - {fileID: 11400000, guid: d70fbae326763e14da63ed118c5bcebe, type: 2}
+  - {fileID: 11400000, guid: b2fb466a99e1c094b876677a60d4be19, type: 2}
+  - {fileID: 11400000, guid: fa87793c61fccd041baf905ec939a5b0, type: 2}
+  - {fileID: 11400000, guid: 2f3649abaaeb6db4d81adf4974de1d77, type: 2}
+  - {fileID: 11400000, guid: a1f38bfae7e86784b95a8a35a518f336, type: 2}
+  - {fileID: 11400000, guid: 8bb9a1106e1ac0b499f056141253bf61, type: 2}
+  - {fileID: 11400000, guid: f6fcd3b44c8845a40ab6b176a17ba2d9, type: 2}
