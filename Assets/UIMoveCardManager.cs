@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class UIMoveCardManager : MonoBehaviour
 {
-    [SerializeField] private List<UI_MoveCard> moveCards;
     [SerializeField] private IntVariable playerActiveMove;
+    [SerializeField] private List<UI_MoveCard> moveCards;
+    private List<UI_MoveCard> activeCards = new();
+    
     private Level currentLevel;
     private float startY;
     private float endY = -70f;
@@ -14,12 +16,46 @@ public class UIMoveCardManager : MonoBehaviour
     public void Initilaize(Component sender, object data)
     {
         currentLevel = (Level)data;
+        
         startY = moveCards[0].rectTransform.anchoredPosition.y;
+        
+        InitializeCards();
         StartCoroutine(ShowCards(1f));
-    } 
+    }
+
+    private void InitializeCards()
+    {
+        for (var i = 0; i < moveCards.Count; i++)
+        {
+            if (i < currentLevel.playerMoves.Count)
+            {
+                activeCards.Add(moveCards[i]);
+            }
+            else
+            {
+                moveCards[i].gameObject.SetActive(false);
+            }
+        }
+    }
+    
+    private IEnumerator ShowCards(float startTime)
+    {
+        yield return new WaitForSeconds(startTime);
+        float beatLength = Tools.GetIntervalLengthFromBPM(currentLevel.defaultSong, 1);
+        float brakeLength = beatLength / 4f;
+        
+        for (int i = 0; i < activeCards.Count ; i++)
+        {
+            UI_MoveCard card = activeCards[i];
+            card.SetIcon(currentLevel.playerMoves[i].icon);
+            StartCoroutine(LerpYCoroutine(startY, endY, card.rectTransform, beatLength));
+            yield return new WaitForSeconds(brakeLength);
+        }
+    }
+
     private void Update()
     {
-        int activeMove = playerActiveMove.value - 1;
+        int activeMove = playerActiveMove.value;
         for( int i = 0; i < moveCards.Count ; i++)
         {
             if (i == activeMove)
@@ -38,28 +74,12 @@ public class UIMoveCardManager : MonoBehaviour
             }
         }
     }
-
-    private IEnumerator ShowCards(float startTime)
-    {
-        yield return new WaitForSeconds(startTime);
-        float beatLength = Tools.GetIntervalLengthFromBPM(currentLevel.defaultSong, 1);
-        float brakeLength = beatLength / 4f;
-        
-        for (int i = 0; i < moveCards.Count ; i++)
-        {
-            UI_MoveCard card = moveCards[i];
-            card.SetIcon(currentLevel.playerMoves[i+1].icon);
-            StartCoroutine(LerpYCoroutine(startY, endY, card.rectTransform, beatLength));
-            yield return new WaitForSeconds(brakeLength);
-        }
-    }
-
+    
     public void HideCards()
     {
-        for (int i = 0; i < moveCards.Count ; i++)
+        for (int i = 0; i < activeCards.Count ; i++)
         {
             UI_MoveCard card = moveCards[i];
-            card.SetIcon(currentLevel.playerMoves[i+1].icon);
             StartCoroutine(LerpYCoroutine(endY, startY, card.rectTransform, 0.25f));
         }
     }

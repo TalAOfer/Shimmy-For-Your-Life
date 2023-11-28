@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 1053106540397727099}
   - component: {fileID: 1310917098184201570}
   - component: {fileID: 6498452033011161690}
+  - component: {fileID: 910568892888294722}
   m_Layer: 5
   m_Name: Scene Loader
   m_TagString: Untagged
@@ -142,7 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFadeIn: 0
-  isFadeOut: 0
+  isFadeOut: 1
+  allLevels: {fileID: 11400000, guid: 4998e02e0edc0a84ebb421ea466dae4a, type: 2}
 --- !u!114 &1463325980219549681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +249,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: GoToLevel
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &910568892888294722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6163351305594692505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbd0748e8a561f4188ef284437f3961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 88611dcefab83864d971fa95222ecee9, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6163351305594692506}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: ExitApp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

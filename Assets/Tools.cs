@@ -30,9 +30,9 @@ public static class Tools
         }
     }
 
-    public static float GetIntervalLengthFromBPM(Song song, int everyXBeats)
+    public static float GetIntervalLengthFromBPM(Song song, float intervalMult)
     {
-        return (60f / song.bpm) * everyXBeats;
+        return (60f / song.bpm) * intervalMult;
     }
 
 
@@ -67,13 +67,16 @@ public static class Tools
         int rand = Random.Range(0, 100);
         return (chance > rand);
     }
-
+    
+#if  UNITY_EDITOR
+    
     public static GameObject InstantiatePrefab(GameObject prefab, Vector3 position)
     {
         GameObject instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
         instance.transform.position = position;
         return instance;
     }
+#endif
 }
 
 public enum Directions

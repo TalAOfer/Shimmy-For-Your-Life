@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7803272788850764781}
   - component: {fileID: 2051653077908956572}
   - component: {fileID: 1563729724512947774}
+  - component: {fileID: 8212176373444386140}
   m_Layer: 0
   m_Name: Player Entity
   m_TagString: Player
@@ -143,6 +144,7 @@ MonoBehaviour:
   ResetLevel: {fileID: 11400000, guid: e41058a6b090d494ca3e423dff8d5cdf, type: 2}
   WinLevel: {fileID: 11400000, guid: 464ffff0275824b4aa42b29f52bc20b4, type: 2}
   OnPlayerMissedBeat: {fileID: 11400000, guid: ee749b7f78cbffd4fa3380707760ef46, type: 2}
+  defaultMove: {fileID: 11400000, guid: 3a1222a2cd9e59743b303d824a94962c, type: 2}
   playerActiveMove: {fileID: 11400000, guid: 24e4971ca8a1f0641b34d57bd78a1805, type: 2}
 --- !u!114 &2051653077908956572
 MonoBehaviour:
@@ -177,6 +179,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!50 &8212176373444386140
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2899293665017688088}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3423748992577021784
 GameObject:
   m_ObjectHideFlags: 0

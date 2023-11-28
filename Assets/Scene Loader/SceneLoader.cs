@@ -7,7 +7,6 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private bool isFadeIn;
     [SerializeField] private bool isFadeOut;
-    [SerializeField] private CurrentLevel currentLevel;
     [SerializeField] private AllLevels allLevels;
     
     private Animator anim;
@@ -36,15 +35,12 @@ public class SceneLoader : MonoBehaviour
     public void GoToLevel(Component sender, object data)
     {
         Level level = (Level)data;
-        currentLevel.value = level;
         SceneManager.LoadSceneAsync(level.sceneName);
     }
     public void GoToNextLevel()
     {
         if (isFadeOut) anim.Play("Fade_Out");
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log(currentLevelIndex);
-        currentLevel.value = allLevels.levels[currentLevelIndex + 1];
         ChangeScene(currentLevelIndex + 1);
     }
     

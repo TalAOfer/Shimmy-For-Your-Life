@@ -16,15 +16,10 @@ public class UIlevelsManager : MonoBehaviour
     [SerializeField] private List<UILevelElement> levelElements;
     private int currentBatchIndex = 0;
 
-    private void Start()
+    public void Start()
     {
         GameData currentGameData = SaveSystem.LoadData();
 
-        if (currentGameData == null)
-        {
-            currentGameData = SaveSystem.CreateNewData(allLevels);
-        }
-        
         for (int i = 0; i < currentGameData.levels.Count; i++)
         {
             LevelData currentLevelData = currentGameData.levels[i];
@@ -34,11 +29,6 @@ public class UIlevelsManager : MonoBehaviour
     } 
     
 #if  UNITY_EDITOR
-    [Button]
-    public void ResetGameData()
-    {
-        SaveSystem.ResetGameData();
-    }
     
     [Button]
     public void SpawnLevelBatches()

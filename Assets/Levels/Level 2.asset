@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   sceneName: 2
-  defaultSong: {fileID: 11400000, guid: 3caa235759c41d44b8b286a4130c844e, type: 2}
+  defaultSong: {fileID: 11400000, guid: 81c435df77530894499aaf056da0c632, type: 2}
   playerMoves:
-  - {fileID: 11400000, guid: 3a1222a2cd9e59743b303d824a94962c, type: 2}
   - {fileID: 11400000, guid: fa87793c61fccd041baf905ec939a5b0, type: 2}
   - {fileID: 11400000, guid: f6fcd3b44c8845a40ab6b176a17ba2d9, type: 2}
   - {fileID: 11400000, guid: 8bb9a1106e1ac0b499f056141253bf61, type: 2}
   - {fileID: 11400000, guid: 8096db2d43f67f4488d270e87ffa530f, type: 2}
+  unlockWhenFinished: {fileID: 0}

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tile
   - Flag
+  - MovingTile
   layers:
   - Default
   - TransparentFX

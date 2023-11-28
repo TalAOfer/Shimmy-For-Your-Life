@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0dea951d9e88345a539c5e710f3c7b, type: 3}
+  m_Name: Wiggler
+  m_EditorClassIdentifier: 
+  steps:
+  - direction: 5
+    length: 1
+    moveHeight: 0
+    animName: Spin
+  - direction: 7
+    length: 1
+    moveHeight: 0
+    animName: Spin
+  - direction: 5
+    length: 1
+    moveHeight: 0
+    animName: Spin
+  - direction: 8
+    length: 1
+    moveHeight: 0
+    animName: Idle2
+  ignoreBreakBetweenSteps: 0
+  icon: {fileID: 21300000, guid: 5aa198fe80ecd154a90dcaf397d1efa0, type: 3}

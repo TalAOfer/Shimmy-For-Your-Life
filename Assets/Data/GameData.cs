@@ -1,9 +1,15 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class GameData
 {
+    //[SerializeField, HideInInspector]
     public List<LevelData> levels = new();
+
+    // Public property to access levels
+    //public List<LevelData> Levels { get; set; }
+
 }
 
 [System.Serializable]

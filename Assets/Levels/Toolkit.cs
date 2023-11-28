@@ -12,16 +12,24 @@ public class Toolkit : OdinEditorWindow
     [MenuItem("Tools/Toolkit")]
     private static void OpenWindow()
     {
-        GetWindow<Toolkit>().Show();
+        var window = GetWindow<Toolkit>();
+        window.LoadGameData();
+        window.Show();
     }
 
     [TabGroup("Level Picker")]
     public AllLevels allLevels; // Drag your AllLevels ScriptableObject here in the Inspector.
 
+    [TabGroup("Level Picker")] public Level startMenu; // Drag your StartMenu ScriptableObject here in the Inspector.
+
+    [TabGroup("Level Picker")] public Level currentLevel;
+
     [TabGroup("Level Picker")]
-    public Level startMenu; // Drag your StartMenu ScriptableObject here in the Inspector.
-    
-    [TabGroup("Level Picker")] public CurrentLevel currentLevel;
+    [Button("Redraw Level Picker")]
+    private void Redraw()
+    {
+        DrawLevelPickerTab();
+    }
 
     // This custom drawer method is specifically for the 'Level Picker' tab.
     [TabGroup("Level Picker"), OnInspectorGUI]
@@ -31,11 +39,11 @@ public class Toolkit : OdinEditorWindow
         {
             if (GUILayout.Button("Start Menu", GUILayout.Width(100), GUILayout.Height(25)))
             {
-                currentLevel.value = startMenu;
+                currentLevel = startMenu;
                 startMenu.GotoScene();
             }
         }
-        
+
         if (allLevels != null && allLevels.levels != null)
         {
             // Define the number of buttons per row based on the current window width
@@ -62,7 +70,7 @@ public class Toolkit : OdinEditorWindow
                     // Draw the button
                     if (GUILayout.Button(level.sceneName, GUILayout.Width(75), GUILayout.Height(75)))
                     {
-                        currentLevel.value = level;
+                        currentLevel = level;
                         level.GotoScene(); // Call the GoToScene method when the button is clicked
                     }
                 }
@@ -91,7 +99,7 @@ public class Toolkit : OdinEditorWindow
         Vector3 currentPosition = Vector3.zero;
 
         // Instantiate the start tile at the origin (0,0)
-        
+
         GameObject startTile = Tools.InstantiatePrefab(tilePrefab, currentPosition);
         startTile.transform.SetParent(parentObject.transform);
 
@@ -126,12 +134,63 @@ public class Toolkit : OdinEditorWindow
 
     private IEnumerable<Move> GetMovesFromCurrentLevel()
     {
-        if (currentLevel != null && currentLevel.value != null && currentLevel.value.playerMoves != null)
+        if (currentLevel != null && currentLevel != null && currentLevel.playerMoves != null)
         {
-            return currentLevel.value.playerMoves;
+            return currentLevel.playerMoves;
         }
 
         return new List<Move>(); // Return an empty list if no moves are available
+    }
+
+    private GameData gameData;
+
+    private void LoadGameData()
+    {
+        gameData = SaveSystem.LoadData();
+    }
+
+    [TabGroup("Save System"), OnInspectorGUI]
+    private void DrawSaveSystemTab()
+    {
+        if (gameData != null)
+        {
+            foreach (var level in gameData.levels)
+            {
+                EditorGUILayout.BeginVertical("box");
+                level.name = EditorGUILayout.TextField("Name", level.name);
+                level.didFinish = EditorGUILayout.Toggle("Did Finish", level.didFinish);
+                level.isUnlocked = EditorGUILayout.Toggle("Is Unlocked", level.isUnlocked);
+                level.didPerfect = EditorGUILayout.Toggle("Did Perfect", level.didPerfect);
+                EditorGUILayout.EndVertical();
+            }
+
+            if (GUILayout.Button("Save Changes"))
+            {
+                SaveSystem.SaveData(gameData);
+            }
+        }
+
+        else
+        {
+            EditorGUILayout.LabelField("No save data found.");
+        }
+
+        if (GUILayout.Button("Refresh Data"))
+        {
+            LoadGameData();
+        }
+
+        if (GUILayout.Button("Reset Game Data"))
+        {
+            SaveSystem.ResetGameData();
+            SaveSystem.CreateNewData(allLevels);
+            LoadGameData();
+        }
+
+        if (GUILayout.Button("Print File Path"))
+        {
+            SaveSystem.PrintFilePath();
+        }
     }
 }
 #endif

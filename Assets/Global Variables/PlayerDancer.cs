@@ -7,8 +7,9 @@ public class PlayerDancer : DancingEntity
     public GameEvent ResetLevel;
     public GameEvent WinLevel;
     public GameEvent OnPlayerMissedBeat;
+    [SerializeField] private Move defaultMove;
     [SerializeField] private IntVariable playerActiveMove;
-    
+
     void Update()
     {
         if (IsAnyOfKeysHeld())
@@ -17,14 +18,14 @@ public class PlayerDancer : DancingEntity
             {
                 if (Input.GetKeyDown(i.ToString())) // If one of the number keys is pressed
                 {
-                    activeMoveIndex = i;
+                    activeMoveIndex = i - 1;
                     return; // Exit the method early as we've found the key
                 }
             }
         }
         else
         {
-            activeMoveIndex = 0;
+            activeMoveIndex = -1;
         }
 
         playerActiveMove.value = activeMoveIndex;
@@ -43,12 +44,13 @@ public class PlayerDancer : DancingEntity
 
     public override void Move()
     {
-        StartCoroutine(GetMoving(currentLevel.playerMoves[activeMoveIndex]));
+        Move currentMove = activeMoveIndex == -1 ? defaultMove : currentLevel.playerMoves[activeMoveIndex];
+        StartCoroutine(GetMoving(currentMove));
     }
 
     public override void UpdateMoveIndex()
     {
-        if (activeMoveIndex != 0) activeMoveIndex = 0;
+        if (activeMoveIndex != -1) activeMoveIndex = -1;
         else OnPlayerMissedBeat.Raise();
     }
 
@@ -95,5 +97,4 @@ public class PlayerDancer : DancingEntity
     {
         ResetLevel.Raise();
     }
-    
 }

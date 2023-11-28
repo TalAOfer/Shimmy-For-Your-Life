@@ -4,6 +4,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+#if  UNITY_EDITOR
+
 public class DanceFloorGenerator : MonoBehaviour
 {
     public GameObject tilePrefab; // Assign your tile prefab in the inspector
@@ -170,3 +172,4 @@ public class DanceFloorGenerator : MonoBehaviour
         }
     }
 }
+#endif
