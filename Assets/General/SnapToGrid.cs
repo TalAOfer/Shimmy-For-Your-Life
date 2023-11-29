@@ -8,7 +8,7 @@ public class SnapToGrid : MonoBehaviour
 {
     void Update()
     {
-
+        if (Application.isPlaying) return;
         Vector2 pos = transform.position;
 
         // Find the bottom-left corner of the tile that the object is on

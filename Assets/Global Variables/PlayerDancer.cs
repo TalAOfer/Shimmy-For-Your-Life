@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class PlayerDancer : DancingEntity
 {
-    public GameEvent ResetLevel;
-    public GameEvent WinLevel;
-    public GameEvent OnPlayerMissedBeat;
     [SerializeField] private Move defaultMove;
     [SerializeField] private IntVariable playerActiveMove;
+    [SerializeField] private bool isTesting;
+    
+    #region Tester Vars and Start Function
 
-    void Update()
+    private List<int> moveIndexes; // From TesterDancer
+    private int currentMoveCount = 0; // From TesterDancer
+    protected override void InitializeMoves()
     {
+        moveIndexes = currentLevel.moveIndexesForPerfect;
+        activeMoveIndex = moveIndexes[currentMoveCount] - 1;
+        playerActiveMove.value = activeMoveIndex;
+    }
+    
+
+    #endregion
+
+    private void Update()
+    {
+        if (isTesting) return; // Use PlayerDancer's logic when not in testing mode
+        
         if (IsAnyOfKeysHeld())
         {
             for (int i = 1; i <= 4; i++) // Iterate over the numbers 1 to 4
@@ -31,7 +45,7 @@ public class PlayerDancer : DancingEntity
         playerActiveMove.value = activeMoveIndex;
     }
 
-    bool IsAnyOfKeysHeld()
+    private bool IsAnyOfKeysHeld()
     {
         for (int i = 1; i <= 4; i++)
         {
@@ -42,35 +56,40 @@ public class PlayerDancer : DancingEntity
         return false;
     }
 
-    public override void Move()
+    protected override void Move()
     {
-        Move currentMove = activeMoveIndex == -1 ? defaultMove : currentLevel.playerMoves[activeMoveIndex];
+        var currentMove = activeMoveIndex == -1 ? defaultMove : currentLevel.playerMoves[activeMoveIndex];
         StartCoroutine(GetMoving(currentMove));
     }
 
-    public override void UpdateMoveIndex()
+    protected override void UpdateMoveIndex()
     {
-        if (activeMoveIndex != -1) activeMoveIndex = -1;
-        else OnPlayerMissedBeat.Raise();
+        if (!isTesting) // Player logic
+        {
+            if (activeMoveIndex != -1) activeMoveIndex = -1;
+            else events.OnPlayerMissedBeat.Raise();
+        }
+
+        else // Testing logic
+        {
+            currentMoveCount += 1;
+            if (currentMoveCount >= moveIndexes.Count) return;
+            activeMoveIndex = moveIndexes[currentMoveCount] - 1;
+            playerActiveMove.value = activeMoveIndex;
+        }
     }
 
-    public override bool ShouldIStop(Collider2D[] objectsUnderMe)
+    protected override bool ShouldIStop(Collider2D[] objectsUnderMe)
     {
         if (ShouldIFall(objectsUnderMe.Length))
         {
-            if (!is3D.value)
-            {
-                StartCoroutine(Fall2D());
-                return true;
-            }
-
-            StartCoroutine(Fall3D(5, 10));
+            Fall();
             return true;
         }
 
         if (ShouldIWin(objectsUnderMe))
         {
-            WinLevel.Raise();
+            events.OnWinLevel.Raise();
             anim.speed = 1;
             anim.Play("Win");
             SetMovement(false);
@@ -95,6 +114,6 @@ public class PlayerDancer : DancingEntity
 
     public override void OnEndFall()
     {
-        ResetLevel.Raise();
+        events.ResetLevel.Raise();
     }
 }

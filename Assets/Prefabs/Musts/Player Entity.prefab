@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c115cdc722226924181380149cd7025c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  events: {fileID: 11400000, guid: 6a74c72aa48b3054ba1dd0788fea2210, type: 2}
   everyXBeats: 2
   jumpCurve:
     serializedVersion: 2
@@ -141,9 +142,6 @@ MonoBehaviour:
   is3D: {fileID: 11400000, guid: 049e3164e5d28c04c9899e70c39c15e9, type: 2}
   anim: {fileID: 1563729724512947774}
   sr: {fileID: 1337783394834713362}
-  ResetLevel: {fileID: 11400000, guid: e41058a6b090d494ca3e423dff8d5cdf, type: 2}
-  WinLevel: {fileID: 11400000, guid: 464ffff0275824b4aa42b29f52bc20b4, type: 2}
-  OnPlayerMissedBeat: {fileID: 11400000, guid: ee749b7f78cbffd4fa3380707760ef46, type: 2}
   defaultMove: {fileID: 11400000, guid: 3a1222a2cd9e59743b303d824a94962c, type: 2}
   playerActiveMove: {fileID: 11400000, guid: 24e4971ca8a1f0641b34d57bd78a1805, type: 2}
 --- !u!114 &2051653077908956572

@@ -36,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 2882488286122635425}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -52.61, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &4566207056572037834
 Camera:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   winFlag: {fileID: 0}
   virtualCam: {fileID: 4879220756966838807}
   twoDFollowOffset: {x: 0, y: 0, z: -10}
-  threeDFollowOffset: {x: 0, y: -8, z: -8}
+  threeDFollowOffset: {x: 0, y: -10, z: -10}
   threeDCamRotation: {x: -45, y: 0, z: 0}
   threeDObjectRotation: {x: -90, y: 0, z: 0}
   is3d: {fileID: 11400000, guid: 049e3164e5d28c04c9899e70c39c15e9, type: 2}

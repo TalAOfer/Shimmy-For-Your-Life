@@ -2,40 +2,120 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DancingEntity : MonoBehaviour
+public enum DancerType
 {
-    [SerializeField] protected AllEvents events;
-    
+    Player,
+    Tester,
+    NPC
+}
+
+public class Dancer : MonoBehaviour
+{
+    [SerializeField] private AllEvents events;
+    [SerializeField] private Move defaultMove;
+    [SerializeField] private DancerType dancerType;
+    [SerializeField] private string startMarkerString;
     [SerializeField] private int everyXBeats = 2;
     [SerializeField] private AnimationCurve jumpCurve;
-    [SerializeField] private string startMarkerString;
-    protected Level currentLevel;
+    [SerializeField] private IntVariable playerActiveMove;
+    private Level _currentLevel;
     public BoolVariable is3D;
 
-    protected bool canMove = false;
-    private float beatInterval;
-    protected int activeMoveIndex;
+    private bool _canMove;
+    private float _beatInterval;
+    private int _activeMoveIndex;
 
     [SerializeField] protected Animator anim;
     [SerializeField] private SpriteRenderer sr;
-    private bool isInitialized;
+    private bool _isInitialized;
 
-    public virtual void Initialize(Component sender, object data)
+    private List<int> _moveIndexes;
+    private int _currentMoveCount = 0;
+    private List<Move> _moves;
+    [SerializeField] private AllMoves allMoves;
+
+    public void Initialize(Component sender, object data)
     {
-        currentLevel = (Level)data;
+        _currentLevel = (Level)data;
         InitializeMoves();
-        beatInterval = Tools.GetIntervalLengthFromBPM(currentLevel.defaultSong, everyXBeats);
-        anim.speed = 1 / beatInterval;
-        isInitialized = true;
+        _beatInterval = Tools.GetIntervalLengthFromBPM(_currentLevel.defaultSong, everyXBeats);
+        anim.speed = 1 / _beatInterval;
+        _isInitialized = true;
         var objectsUnderMe = GetFloorObjects();
         transform.SetParent(GetCurrentTileTransform(objectsUnderMe));
+        
+        if (dancerType == DancerType.Tester)
+        {
+            _moveIndexes = _currentLevel.moveIndexesForPerfect;
+            _activeMoveIndex = _moveIndexes[_currentMoveCount] - 1;
+            playerActiveMove.value = _activeMoveIndex;
+        }
     }
-
-    protected virtual void InitializeMoves()
+    
+    private void InitializeMoves()
     {
+        _moves = new List<Move>();
+        int numOfMoves = Random.Range(3, 5);
+        List<int> randoms = Tools.GetRandoms(numOfMoves, 0, allMoves.moves.Count - 1);
+        for (int i = 0; i < randoms.Count; i++)
+        {
+            _moves.Add(allMoves.moves[randoms[i]]);
+        }
     }
 
-    protected void SetMovement(bool enable) => canMove = enable;
+    private void Move()
+    {
+        Move currentMove = _currentLevel.playerMoves[_activeMoveIndex];
+        if (dancerType != DancerType.NPC)
+        {
+            if (_activeMoveIndex == -1) currentMove = defaultMove;
+        }
+        StartCoroutine(GetMoving(currentMove));
+    }
+
+    private void UpdateMoveIndex()
+    {
+        switch (dancerType)
+        {
+            case DancerType.Player:
+                if (_activeMoveIndex != -1) { _activeMoveIndex = -1;}
+                else events.OnPlayerMissedBeat.Raise();
+                break;
+            case DancerType.Tester:
+                _currentMoveCount += 1;
+                if (_currentMoveCount >= _moveIndexes.Count) return;
+                _activeMoveIndex = _moveIndexes[_currentMoveCount] - 1;
+                playerActiveMove.value = _activeMoveIndex;
+                break;
+            case DancerType.NPC:
+                _activeMoveIndex += 1;
+                if (_activeMoveIndex >= _moves.Count)
+                {
+                    _activeMoveIndex = 0;
+                }
+                break;
+        }
+    }
+
+    private bool ShouldIWin(Collider2D[] objectsUnderMe)
+    {
+        foreach (var coll in objectsUnderMe)
+        {
+            if (coll.CompareTag("Flag"))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void OnEndFall()
+    {
+        events.ResetLevel.Raise();
+    }
+
+    private void SetMovement(bool enable) => _canMove = enable;
 
     public void OnMarker(Component sender, object data)
     {
@@ -50,28 +130,23 @@ public abstract class DancingEntity : MonoBehaviour
     {
         var beatNum = (int)data;
 
-        if (isInitialized && canMove && beatNum % 2 != 0)
+        if (_isInitialized && _canMove && beatNum % 2 != 0)
         {
             Move();
         }
     }
 
-    protected abstract void Move();
-
-    protected abstract void UpdateMoveIndex();
-
-    protected IEnumerator GetMoving(Move move)
+    private IEnumerator GetMoving(Move move)
     {
         UpdateMoveIndex();
 
-        float moveBreakDuration = move.ignoreBreakBetweenSteps ? 0 : beatInterval * (1f / (move.steps.Count * 2));
-        float stepDuration = (beatInterval / move.steps.Count) - moveBreakDuration;
+        float moveBreakDuration = move.ignoreBreakBetweenSteps ? 0 : _beatInterval * (1f / (move.steps.Count * 2));
+        float stepDuration = (_beatInterval / move.steps.Count) - moveBreakDuration;
         float animSpeed = 1 / stepDuration;
         anim.speed = animSpeed;
 
-        for (int i = 0; i < move.steps.Count; i++)
+        foreach (Step step in move.steps)
         {
-            Step step = move.steps[i];
             anim.Play(step.animName, -1, 0f);
             //transform.SetParent(null);
 
@@ -107,17 +182,7 @@ public abstract class DancingEntity : MonoBehaviour
 
             if (ShouldIStop(objectsUnderMe)) yield break;
 
-            //If this step is stationary or this is the last step- set tile as parent.
-            //For removing the option for tiles to move when you're about to creating a weird jitter
-            if (i == move.steps.Count - 1 || direction == Vector3.zero)
-            {
-                transform.SetParent(GetCurrentTileTransform(objectsUnderMe), true);
-            }
-            else
-            {
-                transform.SetParent(null, true);
-            }
-
+            transform.SetParent(GetCurrentTileTransform(objectsUnderMe), true);
 
             yield return new WaitForSeconds(moveBreakDuration);
         }
@@ -128,7 +193,25 @@ public abstract class DancingEntity : MonoBehaviour
         return Physics2D.OverlapCircleAll(transform.position, 0.1f);
     }
 
-    protected abstract bool ShouldIStop(Collider2D[] objectsUnderMe);
+    private bool ShouldIStop(Collider2D[] objectsUnderMe)
+    {
+        if (ShouldIFall(objectsUnderMe.Length))
+        {
+            Fall();
+            return true;
+        }
+
+        if (dancerType != DancerType.NPC && ShouldIWin(objectsUnderMe))
+        {
+            events.OnWinLevel.Raise();
+            anim.speed = 1;
+            anim.Play("Win");
+            SetMovement(false);
+            return true;
+        }
+
+        return false;
+    }
 
     private Transform GetCurrentTileTransform(Collider2D[] objectsUnderMe)
     {
@@ -145,12 +228,12 @@ public abstract class DancingEntity : MonoBehaviour
         return currentTile;
     }
 
-    protected bool ShouldIFall(int collCount)
+    private bool ShouldIFall(int collCount)
     {
         return (collCount <= 0);
     }
 
-    protected void Fall()
+    private void Fall()
     {
         if (!is3D.value)
         {
@@ -164,7 +247,7 @@ public abstract class DancingEntity : MonoBehaviour
 
     private IEnumerator Fall2D()
     {
-        canMove = false;
+        _canMove = false;
         while (transform.localScale.x > 0.05f)
         {
             Vector3 newScale = Vector3.Lerp(transform.localScale, Vector3.zero, Time.deltaTime * 3);
@@ -178,7 +261,7 @@ public abstract class DancingEntity : MonoBehaviour
 
     private IEnumerator Fall3D(float fallDistance, float fallSpeed)
     {
-        canMove = false;
+        _canMove = false;
         sr.sortingOrder = 0;
         Vector3 startPosition = transform.position; // Store the starting position
         Vector3 endPosition =
@@ -201,6 +284,4 @@ public abstract class DancingEntity : MonoBehaviour
 
         OnEndFall();
     }
-
-    public abstract void OnEndFall();
 }

@@ -9,7 +9,7 @@ public class NPCDancer : DancingEntity
     [SerializeField] private AllMoves allMoves;
     private List<Move> moves;
 
-    public override void InitializeMoves(Level level)
+    protected override void InitializeMoves()
     {
         moves = new List<Move>();
         int numOfMoves = Random.Range(3, 5);
@@ -19,15 +19,13 @@ public class NPCDancer : DancingEntity
             moves.Add(allMoves.moves[randoms[i]]);
         }
     }
-    
-    
 
-    public override void Move()
+    protected override void Move()
     {
         StartCoroutine(GetMoving(moves[activeMoveIndex]));
     }
 
-    public override void UpdateMoveIndex()
+    protected override void UpdateMoveIndex()
     {
         activeMoveIndex += 1;
         if (activeMoveIndex >= moves.Count)
@@ -36,17 +34,11 @@ public class NPCDancer : DancingEntity
         }
     }
 
-    public override bool ShouldIStop(Collider2D[] objectsUnderMe)
+    protected override bool ShouldIStop(Collider2D[] objectsUnderMe)
     {
         if (ShouldIFall(objectsUnderMe.Length))
         {
-            if (!is3D.value)
-            {
-                StartCoroutine(Fall2D());
-                return true;
-            }
-
-            StartCoroutine(Fall3D(5, 10));
+            Fall();
             return true;
         }
 

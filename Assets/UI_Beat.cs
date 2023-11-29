@@ -9,7 +9,8 @@ public class UI_Beat : MonoBehaviour
     [SerializeField] private int everyXBeats = 2;
     private float beatInterval;
     [SerializeField] private Image image;
-
+    [SerializeField] private GameObject BeatGO;
+    
     public void Initialize(Component sender, object data)
     {
         currentLevel = (Level)data;
@@ -18,6 +19,11 @@ public class UI_Beat : MonoBehaviour
 
     public void OnMarker(Component sender, object data)
     {
+        string marker = (string)data;
+        if (marker == "3")
+        {
+            BeatGO.SetActive(true);
+        }
     }
 
     public void OnBeat(Component sender, object data)
